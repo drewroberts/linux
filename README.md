@@ -33,4 +33,4 @@ On my streaming devices, I use the following:
 
 ## Custom Keybindings
 
-Files included in the config folder to overwrite default Omarchy configs.
+Files included in the configs folder to overwrite default Omarchy configs.
