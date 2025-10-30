@@ -38,3 +38,5 @@ Files included in the /configs folder to overwrite default Omarchy configs.
 ## Custom ASCII Art
 
 Files included in the /ascii folder to replace the default omarchy ascii at in /.config/omarchy/branding on the linux computers.
+
+To create new ascii art, use [this website](https://patorjk.com/software/taag/).
