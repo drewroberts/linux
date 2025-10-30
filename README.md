@@ -33,4 +33,8 @@ On my streaming devices, I use the following:
 
 ## Custom Keybindings
 
-Files included in the configs folder to overwrite default Omarchy configs.
+Files included in the /configs folder to overwrite default Omarchy configs.
+
+## Custom ASCII Art
+
+Files included in the /ascii folder to replace the default omarchy ascii at in /.config/omarchy/branding on the linux computers.
