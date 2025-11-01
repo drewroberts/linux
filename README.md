@@ -11,6 +11,33 @@ Omarchy gets me a solid foundation for what I want. I'm currently using the Osak
 - [Omarchy GitHub](https://github.com/basecamp/omarchy)
 - [Omarchy ISO GitHub](https://github.com/omacom-io/omarchy-iso)
 
+## Install My Setup
+
+After Omarchy ISO has been installed hit `SUPER ALT + SPACE` to launch Omarchy Menu and do the following:
+
+- Install -> Development -> JavaScript -> Node
+- Install -> Development -> PHP -> Laravel
+- Install -> Development -> Go
+- Install -> Editor -> VS Code
+
+Afterwards, hit `SUPER + ENTER` to open defaul terminal of Alacrity & run these commands:
+
+```bash
+mkdir Code
+cd Code
+code .
+```
+
+Open the VS Code terminal to run the following:
+
+```bash
+git clone https://github.com/drewroberts/linux
+```
+
+This will have you sign in & verify GitHub for use on the machine not only in VS Code but in any terminal.
+
+Afterwards, run the setup script in this repo with the TBD command..
+
 ## Additional Apps
 
 On all of my devices, I use the following:
