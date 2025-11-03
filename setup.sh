@@ -84,7 +84,7 @@ echo -e "\n--- Deploying Custom Web Applications and Icons ---"
 echo "Removing unwanted web application desktop files..."
 while IFS= read -r DESKTOP_FILE; do
     case "$DESKTOP_FILE" in
-        ''|#*) continue ;;
+        ""|"#"*) continue ;;
     esac
     TARGET_FILE="$TARGET_APP_DIR/$DESKTOP_FILE"
     rm -f "$TARGET_FILE" && echo "Removed: $DESKTOP_FILE"
