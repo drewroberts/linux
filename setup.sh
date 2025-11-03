@@ -18,7 +18,7 @@ OMARCHY_BRANDING_DIR="$HOME/.config/omarchy/branding"
 # Function to safely create all required configuration directories
 create_dirs() {
     echo "Ensuring target directories exist..."
-    mkdir -p "$TARGET_ICON_DBootstrapping SpecificationIR"
+    mkdir -p "$TARGET_ICON_DIR"
     mkdir -p "$TARGET_APP_DIR"
     mkdir -p "$HOME/.config/hypr"
     mkdir -p "$HOME/.config/waybar"
@@ -125,14 +125,14 @@ fi
 echo -e "\n--- Creating Symbolic Links for Configurations ---"
 
 # 4.1 Deploy Hyprland
-create_symlink "$REPO_PATH/configs/hypr/hyprland.conf" "$HOME/.config/hypr/hyprland.conf"
+create_symlink "$REPO_PATH/config/hypr/hyprland.conf" "$HOME/.config/hypr/hyprland.conf"
 
 # 4.2 Deploy Waybar
-create_symlink "$REPO_PATH/configs/waybar/config" "$HOME/.config/waybar/config"
-create_symlink "$REPO_PATH/configs/waybar/style.css" "$HOME/.config/waybar/style.css"
+create_symlink "$REPO_PATH/config/waybar/config" "$HOME/.config/waybar/config"
+create_symlink "$REPO_PATH/config/waybar/style.css" "$HOME/.config/waybar/style.css"
 
 # 4.3 Deploy Alacritty
-create_symlink "$REPO_PATH/configs/alacritty/alacritty.yml" "$HOME/.config/alacritty/alacritty.yml"
+create_symlink "$REPO_PATH/config/alacritty/alacritty.yml" "$HOME/.config/alacritty/alacritty.yml"
 
 # 4.4 Deploy Omarchy ASCII Branding
 # Target: ~/.config/omarchy/branding/
