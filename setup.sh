@@ -92,11 +92,15 @@ done < "$REPO_PATH/rm-webapps.txt"
 
 # 3.2 Deploy Icons
 echo "Copying icons to $TARGET_ICON_DIR..."
-cp -f "$REPO_PATH/icons"/* "$TARGET_ICON_DIR"
+cp -f "$REPO_PATH/webapps/icons"/* "$TARGET_ICON_DIR"
 
 # 3.3 Deploy .desktop Files
 echo "Copying .desktop files to $TARGET_APP_DIR..."
-cp -f "$REPO_PATH/webapps"/*.desktop "$TARGET_APP_DIR"
+for desktop_file in "$REPO_PATH/webapps"/*.desktop; do
+    filename=$(basename "$desktop_file")
+    sed "s|\$HOME|$HOME|g" "$desktop_file" > "$TARGET_APP_DIR/$filename"
+    echo "Processed: $filename (expanded \$HOME variables)"
+done
 
 # 3.4 Ensure Executability
 chmod +x "$TARGET_APP_DIR"/*.desktop
