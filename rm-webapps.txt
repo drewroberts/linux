@@ -1,0 +1,6 @@
+dropbox.desktop
+HEY.desktop
+Basecamp.desktop
+Google Messages.desktop
+WhatsApp.desktop
+Zoom.desktop
