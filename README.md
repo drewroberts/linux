@@ -20,7 +20,7 @@ After Omarchy ISO has been installed hit `SUPER ALT + SPACE` to launch Omarchy M
 - Install -> Development -> Go
 - Install -> Editor -> VS Code
 
-Afterwards, hit `SUPER + ENTER` to open defaul terminal of Alacrity & run these commands:
+Afterwards, hit `SUPER + ENTER` to open defaul terminal of Alacritty & run these commands:
 
 ```bash
 mkdir Code
@@ -36,17 +36,21 @@ git clone https://github.com/drewroberts/linux
 
 This will have you sign in & verify GitHub for use on the machine not only in VS Code but in any terminal.
 
-Afterwards, run the setup script in this repo with the TBD command..
+Afterwards, run the setup script in this repo with this command:
+
+```bash
+bash setup.sh
+```
 
 ## Additional Apps
 
 On all of my devices, I use the following:
 
 ### VS Code
-- Easeist to install via menu
+- Easiest to install via menu
 
 ### Telegram
-- Install via AUR
+- Install from AUR via yay
 
 ## Web Apps
 
