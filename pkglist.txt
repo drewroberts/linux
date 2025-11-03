@@ -1,0 +1,2 @@
+beekeeper-studio
+telegram-desktop
