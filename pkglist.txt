@@ -1,2 +1,2 @@
-beekeeper-studio
+beekeeper-studio-bin
 telegram-desktop
