@@ -72,8 +72,8 @@ echo "Installing packages listed in pkglist.txt..."
 yay -S --needed --noconfirm - < "$REPO_PATH/pkglist.txt"
 
 # 2.2 Remove Packages (Optional)
-echo "Removing packages listed in rmlist.txt..."
-yay -Rns --noconfirm - < "$REPO_PATH/rmlist.txt"
+echo "Removing packages listed in rm-applications.txt..."
+yay -Rns --noconfirm - < "$REPO_PATH/rm-applications.txt"
 
 
 # --- 3. Web Application Deployment Phase ---
