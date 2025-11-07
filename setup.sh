@@ -11,7 +11,7 @@
 REPO_PATH="$HOME/Code/linux"
 
 # Define target directories using $HOME for portability
-TARGET_ICON_DIR="$HOME/.local/share/icons"
+TARGET_ICON_DIR="$HOME/.local/share/applications/icons"
 TARGET_APP_DIR="$HOME/.local/share/applications"
 OMARCHY_BRANDING_DIR="$HOME/.config/omarchy/branding"
 
@@ -92,7 +92,7 @@ done < "$REPO_PATH/rm-webapps.txt"
 
 # 3.2 Deploy Icons
 echo "Copying icons to $TARGET_ICON_DIR..."
-cp -f "$REPO_PATH/webapps/icons"/* "$TARGET_ICON_DIR"
+cp -f "$REPO_PATH/webapps/icons"/* "$TARGET_ICON_DIR/"
 
 # 3.3 Deploy .desktop Files
 echo "Copying .desktop files to $TARGET_APP_DIR..."
