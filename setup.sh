@@ -64,12 +64,46 @@ fi
 
 # --- 2. System Package Management Phase ---
 
+# 2.1 Install Packages from pkglist.txt
 echo -e "\n--- Installing/Updating AUR and Repository Packages ---"
-
-# 2.1 Install Packages from pkglist.txt (assume file exists)
-echo "Installing packages listed in pkglist.txt..."
-# --needed prevents reinstallation; --noconfirm for automation
-yay -S --needed --noconfirm - < "$REPO_PATH/pkglist.txt"
+echo "Installing applications..."
+while IFS= read -r PACKAGE; do
+    case "$PACKAGE" in
+        ""|"#"*) continue ;;
+    esac
+    
+    # Check if package is already installed
+    WAS_INSTALLED=false
+    if yay -Q "$PACKAGE" >/dev/null 2>&1; then
+        WAS_INSTALLED=true
+    fi
+    
+    # For already installed packages, check quietly first if they're up to date
+    if [ "$WAS_INSTALLED" = true ]; then
+        QUIET_CHECK=$(yay -S --needed --noconfirm "$PACKAGE" 2>&1)
+        if echo "$QUIET_CHECK" | grep -qi "up to date.*skipping\|nothing to do\|there is nothing to do"; then
+            VERSION=$(yay -Q "$PACKAGE" 2>/dev/null | cut -d' ' -f2)
+            echo "Skipped: $PACKAGE (already updated) - $VERSION"
+            continue
+        fi
+    fi
+    
+    # Run yay with real-time output for packages that need installation/update
+    TEMP_OUTPUT=$(mktemp)
+    echo "Installing $PACKAGE..."
+    yay -S --needed --noconfirm "$PACKAGE" 2>&1 | tee "$TEMP_OUTPUT"
+    YAY_EXIT_CODE=${PIPESTATUS[0]}
+    rm -f "$TEMP_OUTPUT"
+    
+    if [ $YAY_EXIT_CODE -eq 0 ]; then
+        VERSION=$(yay -Q "$PACKAGE" 2>/dev/null | cut -d' ' -f2)
+        echo "Installed: $PACKAGE - $VERSION"
+    else
+        echo "Failed to install: $PACKAGE"
+        echo "$YAY_OUTPUT"
+        echo "---"
+    fi
+done < "$REPO_PATH/pkglist.txt"
 
 # 2.2 Remove Packages (using rm-applications.txt)
 echo -e "\n--- Removing Unwanted Applications ---"
