@@ -71,9 +71,14 @@ echo "Installing packages listed in pkglist.txt..."
 # --needed prevents reinstallation; --noconfirm for automation
 yay -S --needed --noconfirm - < "$REPO_PATH/pkglist.txt"
 
-# 2.2 Remove Packages (Optional)
-echo "Removing packages listed in rm-applications.txt..."
-yay -Rns --noconfirm - < "$REPO_PATH/rm-applications.txt"
+# 2.2 Remove Packages (using rm-applications.txt)
+echo -e "\n--- Removing Unwanted Web Applications ---"
+while IFS= read -r PACKAGE; do
+    case "$PACKAGE" in
+        ""|"#"*) continue ;;
+    esac
+    yay -Rns --noconfirm "$PACKAGE" && echo "Removed: $PACKAGE"
+done < "$REPO_PATH/rm-applications.txt"
 
 
 # --- 3. Web Application Deployment Phase ---
@@ -81,7 +86,7 @@ yay -Rns --noconfirm - < "$REPO_PATH/rm-applications.txt"
 echo -e "\n--- Deploying Custom Web Applications and Icons ---"
 
 # 3.1 Remove Unwanted Web App Desktop Files (using rm-webapps.txt)
-echo "Removing unwanted web application desktop files..."
+echo "Removing unwanted web app files..."
 while IFS= read -r DESKTOP_FILE; do
     case "$DESKTOP_FILE" in
         ""|"#"*) continue ;;
