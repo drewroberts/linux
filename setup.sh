@@ -72,12 +72,16 @@ echo "Installing packages listed in pkglist.txt..."
 yay -S --needed --noconfirm - < "$REPO_PATH/pkglist.txt"
 
 # 2.2 Remove Packages (using rm-applications.txt)
-echo -e "\n--- Removing Unwanted Web Applications ---"
+echo -e "\n--- Removing Unwanted Applications ---"
 while IFS= read -r PACKAGE; do
     case "$PACKAGE" in
         ""|"#"*) continue ;;
     esac
-    yay -Rns --noconfirm "$PACKAGE" && echo "Removed: $PACKAGE"
+    if yay -Rns --noconfirm "$PACKAGE" 2>/dev/null; then
+        echo "Removed: $PACKAGE"
+    else
+        echo "Skipped: $PACKAGE (not installed)"
+    fi
 done < "$REPO_PATH/rm-applications.txt"
 
 
