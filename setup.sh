@@ -53,7 +53,7 @@ create_dirs
 
 # Initial Confirmation and Safety Check
 echo "--------------------------------------------------------"
-echo "Starting Omarchy System Setup (Idempotent execution)."
+echo "Customizing Omarchy Arch Linux Setup"
 echo "Repo Path: $REPO_PATH"
 echo "--------------------------------------------------------"
 read -r -p "Do you want to proceed with package installation and config deployment? (y/N): " response
@@ -121,10 +121,10 @@ done < "$REPO_PATH/rm-applications.txt"
 
 # --- 3. Web Application Deployment Phase ---
 
-echo -e "\n--- Deploying Custom Web Applications and Icons ---"
+echo -e "\n--- Updating Custom Web Apps ---"
 
 # 3.1 Remove Unwanted Web App Desktop Files (using rm-webapps.txt)
-echo "Removing unwanted web app files..."
+echo "Removing unwanted omarchy web apps..."
 while IFS= read -r DESKTOP_FILE; do
     case "$DESKTOP_FILE" in
         ""|"#"*) continue ;;
@@ -138,11 +138,11 @@ echo "Copying icons to $TARGET_ICON_DIR..."
 cp -f "$REPO_PATH/webapps/icons"/* "$TARGET_ICON_DIR/"
 
 # 3.3 Deploy .desktop Files
-echo "Copying .desktop files to $TARGET_APP_DIR..."
+echo "Installing web apps to $TARGET_APP_DIR..."
 for desktop_file in "$REPO_PATH/webapps"/*.desktop; do
     filename=$(basename "$desktop_file")
     sed "s|\$HOME|$HOME|g" "$desktop_file" > "$TARGET_APP_DIR/$filename"
-    echo "Processed: $filename (expanded \$HOME variables)"
+    echo "Installed: $filename (expanded \$HOME variables)"
 done
 
 # 3.4 Ensure Executability
@@ -150,7 +150,7 @@ chmod +x "$TARGET_APP_DIR"/*.desktop
 
 # --- 4. Configuration Deployment Phase (Dotfiles) ---
 
-echo -e "\n--- Copying configuration files ---"
+echo -e "\n--- Updating configuration files ---"
 
 # 4.1 Deploy Custom Hyprland Configs (copy and overwrite with backups)
 create_copy "$REPO_PATH/config/hypr/autostart.conf" "$HOME/.config/hypr/autostart.conf"
