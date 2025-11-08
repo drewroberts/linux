@@ -65,7 +65,7 @@ fi
 # --- 2. System Package Management Phase ---
 
 # 2.1 Install Packages from pkglist.txt
-echo -e "\n--- Installing/Updating AUR and Repository Packages ---"
+echo -e "\n--- Installing/Updating AUR & Arch Linux Packages ---"
 echo "Installing applications..."
 while IFS= read -r PACKAGE; do
     case "$PACKAGE" in
@@ -130,7 +130,11 @@ while IFS= read -r DESKTOP_FILE; do
         ""|"#"*) continue ;;
     esac
     TARGET_FILE="$TARGET_APP_DIR/$DESKTOP_FILE"
-    rm -f "$TARGET_FILE" && echo "Removed: $DESKTOP_FILE"
+    if [ -f "$TARGET_FILE" ]; then
+        rm -f "$TARGET_FILE" && echo "Removed: $DESKTOP_FILE"
+    else
+        echo "Skipped: $DESKTOP_FILE (not installed)"
+    fi
 done < "$REPO_PATH/rm-webapps.txt"
 
 # 3.2 Deploy Icons
@@ -141,8 +145,20 @@ cp -f "$REPO_PATH/webapps/icons"/* "$TARGET_ICON_DIR/"
 echo "Installing web apps to $TARGET_APP_DIR..."
 for desktop_file in "$REPO_PATH/webapps"/*.desktop; do
     filename=$(basename "$desktop_file")
-    sed "s|\$HOME|$HOME|g" "$desktop_file" > "$TARGET_APP_DIR/$filename"
-    echo "Installed: $filename (expanded \$HOME variables)"
+    TARGET_DESKTOP="$TARGET_APP_DIR/$filename"
+    
+    # Create temporary file with expanded variables
+    TEMP_FILE=$(mktemp)
+    sed "s|\$HOME|$HOME|g" "$desktop_file" > "$TEMP_FILE"
+    
+    # Check if target exists and is identical
+    if [ -f "$TARGET_DESKTOP" ] && command -v cmp >/dev/null 2>&1 && cmp -s "$TEMP_FILE" "$TARGET_DESKTOP"; then
+        echo "Skipped: $filename (already installed)"
+        rm -f "$TEMP_FILE"
+    else
+        mv "$TEMP_FILE" "$TARGET_DESKTOP"
+        echo "Installed: $filename"
+    fi
 done
 
 # 3.4 Ensure Executability
