@@ -13,33 +13,29 @@ Omarchy gets me a solid foundation for what I want. I'm currently using the Osak
 
 ## Install My Setup
 
-After Omarchy ISO has been installed hit `SUPER ALT + SPACE` to launch Omarchy Menu and do the following:
-
-- Install -> Development -> JavaScript -> Node
-- Install -> Development -> PHP -> Laravel
-- Install -> Development -> Go
-- Install -> Editor -> VS Code
-
-Afterwards, hit `SUPER + ENTER` to open defaul terminal of Alacritty & run these commands:
+After the Omarchy ISO has been installed, open a terminal (`SUPER + ENTER`) and run the following commands to clone the repository to the opinionated /Code directory for all projects:
 
 ```bash
-mkdir Code
-cd Code
-code .
+git clone https://github.com/drewroberts/linux ~/Code/linux
 ```
 
-Open the VS Code terminal to run the following:
+After the repo has been installed, run the setup script:
 
 ```bash
-git clone https://github.com/drewroberts/linux
-```
-
-This will have you sign in & verify GitHub for use on the machine not only in VS Code but in any terminal.
-
-Afterwards, run the setup script in this repo with this command:
-
-```bash
+cd ~/Code/linux
 bash setup.sh
+```
+
+This will install all base applications, including Visual Studio Code, and apply system configurations.
+
+## Development Environment Setup
+
+If you are setting up a development machine, run the `dev.sh` script **after** the main `setup.sh` script has completed. This will install all necessary development tools and languages.
+
+From the `~/Code/linux` directory, run:
+
+```bash
+bash dev.sh
 ```
 
 ## Additional Apps
@@ -47,7 +43,7 @@ bash setup.sh
 On all of my devices, I use the following:
 
 ### VS Code
-- Easiest to install via menu
+- Install from AUR via yay or Omarchy menu
 
 ### Telegram
 - Install from AUR via yay
