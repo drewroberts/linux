@@ -103,7 +103,7 @@ while IFS= read -r PACKAGE; do
         echo "$YAY_OUTPUT"
         echo "---"
     fi
-done < "$REPO_PATH/pkglist.txt"
+done < "$REPO_PATH/setup/pkglist.txt"
 
 # 2.2 Remove Packages (using rm-applications.txt)
 echo -e "\n--- Removing Unwanted Applications ---"
@@ -116,7 +116,7 @@ while IFS= read -r PACKAGE; do
     else
         echo "Skipped: $PACKAGE (not installed)"
     fi
-done < "$REPO_PATH/rm-applications.txt"
+done < "$REPO_PATH/setup/rm-applications.txt"
 
 
 # --- 3. Web Application Deployment Phase ---
@@ -135,7 +135,7 @@ while IFS= read -r DESKTOP_FILE; do
     else
         echo "Skipped: $DESKTOP_FILE (not installed)"
     fi
-done < "$REPO_PATH/rm-webapps.txt"
+done < "$REPO_PATH/setup/rm-webapps.txt"
 
 # 3.2 Deploy Icons
 echo "Copying icons to $TARGET_ICON_DIR..."
