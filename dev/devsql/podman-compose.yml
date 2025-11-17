@@ -5,9 +5,9 @@ services:
     container_name: devsql
     restart: always
     environment:
-      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      MYSQL_ROOT_PASSWORD: root
       MYSQL_USER: valet
-      MYSQL_PASSWORD: ''
+      MYSQL_PASSWORD: valet
       MYSQL_DATABASE: global_default
     volumes:
       - devsql_data:/var/lib/mysql
