@@ -6,8 +6,6 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_USER: valet
-      MYSQL_PASSWORD: valet
       MYSQL_DATABASE: global_default
     volumes:
       - devsql_data:/var/lib/mysql

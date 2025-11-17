@@ -8,8 +8,7 @@ After running `dev.sh`, you will have a MySQL container with the following confi
 
 - **Container Name**: `devsql`
 - **Port**: `3306`
-- **Default User**: `valet` (no password)
-- **Root User**: `root` (no password)
+- **Root User**: `root` (password: `root`)
 - **Default Database**: `global_default`
 - **Volume**: `devsql_data` (persistent storage)
 
@@ -24,8 +23,8 @@ DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
 DB_DATABASE=your_project_repo_name  # UNIQUE PER APP - use your project's name
-DB_USERNAME=valet
-DB_PASSWORD=
+DB_USERNAME=root
+DB_PASSWORD=root
 ```
 
 ### 2. Creating a New Database for Your Project
@@ -34,7 +33,7 @@ Before running migrations, you need to create a database for your project:
 
 **Option A: Using MySQL CLI**
 ```bash
-mysql -u valet -h 127.0.0.1 -e "CREATE DATABASE your_project_name;"
+mysql -u root -p root -h 127.0.0.1 -e "CREATE DATABASE your_project_name;"
 ```
 
 **Option B: Using Beekeeper Studio**
@@ -61,8 +60,8 @@ Use these settings to connect to your development database with Beekeeper Studio
 | **Connection Type** | MySQL |
 | **Host** | `127.0.0.1` |
 | **Port** | `3306` |
-| **User** | `valet` |
-| **Password** | *(Leave blank)* |
+| **User** | `root` |
+| **Password** | `root` |
 | **Default Database** | `global_default` (optional) |
 
 ### Connecting to a Specific Project Database
@@ -98,7 +97,7 @@ podman logs devsql
 
 ### Access MySQL Shell Directly
 ```bash
-podman exec -it devsql mysql -u valet
+podman exec -it devsql mysql -u root -proot
 ```
 
 ## Troubleshooting
@@ -122,7 +121,7 @@ systemctl --user start container-devsql.service
 If you get a "database doesn't exist" error in Laravel, make sure you've created the database:
 
 ```bash
-mysql -u valet -h 127.0.0.1 -e "SHOW DATABASES;"
+mysql -u root -proot -h 127.0.0.1 -e "SHOW DATABASES;"
 ```
 
 If your database isn't listed, create it using one of the methods above.
@@ -155,6 +154,6 @@ systemctl --user enable container-devsql.service
 1. Clone or create your Laravel project
 2. Copy `.env.example` to `.env`
 3. Update the database settings in `.env` (see Laravel configuration above)
-4. Create the database: `mysql -u valet -h 127.0.0.1 -e "CREATE DATABASE your_project_name;"`
+4. Create the database: `mysql -u root -p root -h 127.0.0.1 -e "CREATE DATABASE your_project_name;"`
 5. Run migrations: `php artisan migrate`
 6. Start developing! 🚀
