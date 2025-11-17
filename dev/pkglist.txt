@@ -4,4 +4,3 @@ php
 composer
 go
 podman-compose
-valet-linux

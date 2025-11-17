@@ -110,6 +110,37 @@ while IFS= read -r PACKAGE; do
     fi
 done < "$REPO_PATH/dev/pkglist.txt"
 
+# 2.1 Install Composer Global Packages
+echo -e "\n--- Installing Composer Global Packages ---"
+while IFS= read -r PACKAGE; do
+    case "$PACKAGE" in
+        ""|"#"*) continue ;;
+    esac
+    
+    # Extract package name (the part after the last /)
+    PACKAGE_NAME=$(echo "$PACKAGE" | awk -F'/' '{print $NF}')
+    
+    # Check if package is already installed
+    if composer global show "$PACKAGE" >/dev/null 2>&1; then
+        VERSION=$(composer global show "$PACKAGE" 2>/dev/null | grep 'versions' | awk '{print $3}')
+        echo "Skipped: $PACKAGE (already installed) - $VERSION"
+    else
+        echo "Installing $PACKAGE..."
+        if composer global require "$PACKAGE" --no-interaction; then
+            VERSION=$(composer global show "$PACKAGE" 2>/dev/null | grep 'versions' | awk '{print $3}')
+            echo "Installed: $PACKAGE - $VERSION"
+        else
+            echo "Failed to install: $PACKAGE"
+        fi
+    fi
+done < "$REPO_PATH/dev/composer.txt"
+
+# Ensure composer bin is in PATH
+if [[ ":$PATH:" != *":$HOME/.config/composer/vendor/bin:"* ]]; then
+    echo -e "\nNote: Add Composer bin directory to your PATH by adding this to your shell config:"
+    echo 'export PATH="$HOME/.config/composer/vendor/bin:$PATH"'
+fi
+
 # --- 3. Development SQL Container Setup ---
 
 echo -e "\n--- Setting Up Development SQL Container ---"

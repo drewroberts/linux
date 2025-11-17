@@ -1,0 +1,3 @@
+cpriego/valet-linux
+laravel/installer
+outrightvision/api-model

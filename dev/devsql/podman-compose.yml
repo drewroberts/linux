@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   devsql:
-    image: mysql/mysql-server:latest
+    image: quay.io/fedora/mysql-80:latest
     container_name: devsql
     restart: always
     environment:
