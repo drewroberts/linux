@@ -1,0 +1,20 @@
+version: '3.7'
+services:
+  devsql:
+    image: mysql/mysql-server:latest
+    container_name: devsql
+    restart: always
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      MYSQL_ROOT_PASSWORD: ''
+      MYSQL_USER: valet
+      MYSQL_PASSWORD: ''
+      MYSQL_DATABASE: global_default
+    volumes:
+      - devsql_data:/var/lib/mysql
+    ports:
+      - '3306:3306'
+
+volumes:
+  devsql_data:
+    driver: local
