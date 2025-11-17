@@ -137,16 +137,45 @@ if [ ! -f "$COMPOSE_DEST" ] || ! cmp -s "$COMPOSE_SOURCE" "$COMPOSE_DEST"; then
 fi
 
 # 3.3 Start the container with podman-compose
-echo "Starting devsql container..."
-(cd "$DEVSQL_DIR" && podman-compose up -d)
+# Check if container is already running
+if podman ps --format "{{.Names}}" | grep -q "^devsql$"; then
+    echo "Container devsql is already running"
+    # If compose file changed, restart the container
+    if [ "$COMPOSE_CHANGED" = true ]; then
+        echo "Compose file changed, restarting container..."
+        (cd "$DEVSQL_DIR" && podman-compose down && podman-compose up -d)
+        sleep 2
+    fi
+else
+    echo "Starting devsql container..."
+    if (cd "$DEVSQL_DIR" && podman-compose up -d); then
+        echo "Container started successfully"
+        sleep 2
+    else
+        echo "ERROR: Failed to start devsql container"
+        exit 1
+    fi
+    
+    # Verify container is running
+    if ! podman ps --format "{{.Names}}" | grep -q "^devsql$"; then
+        echo "ERROR: Container 'devsql' is not running"
+        echo "Check logs with: podman logs devsql"
+        exit 1
+    fi
+fi
 
 # 3.4 Generate systemd service file
 if [ ! -f "$SERVICE_FILE" ] || [ "$COMPOSE_CHANGED" = true ]; then
     echo "Generating systemd service file..."
-    (cd "$DEVSQL_DIR" && podman generate systemd --name devsql --files --new)
-    if [ -f "$DEVSQL_DIR/container-devsql.service" ]; then
-        mv "$DEVSQL_DIR/container-devsql.service" "$SERVICE_FILE"
-        echo "Generated: container-devsql.service"
+    if (cd "$DEVSQL_DIR" && podman generate systemd --name devsql --files --new); then
+        if [ -f "$DEVSQL_DIR/container-devsql.service" ]; then
+            mv "$DEVSQL_DIR/container-devsql.service" "$SERVICE_FILE"
+            echo "Generated: container-devsql.service"
+        else
+            echo "WARNING: Service file was not created in expected location"
+        fi
+    else
+        echo "WARNING: Failed to generate systemd service file"
     fi
 else
     echo "Skipped: systemd service file (already exists)"
