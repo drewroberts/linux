@@ -1,12 +1,11 @@
 version: '3.7'
 services:
   devsql:
-    image: quay.io/fedora/mysql-80:latest
+    image: docker.io/library/mysql:latest
     container_name: devsql
     restart: always
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
-      MYSQL_ROOT_PASSWORD: ''
       MYSQL_USER: valet
       MYSQL_PASSWORD: ''
       MYSQL_DATABASE: global_default
