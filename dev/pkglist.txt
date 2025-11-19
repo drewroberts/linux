@@ -4,3 +4,4 @@ php
 composer
 go
 podman-compose
+kubeseal
