@@ -95,12 +95,11 @@ while IFS= read -r PACKAGE; do
     YAY_EXIT_CODE=${PIPESTATUS[0]}
     rm -f "$TEMP_OUTPUT"
     
-    if [ $YAY_EXIT_CODE -eq 0 ]; then
+    if [ "$YAY_EXIT_CODE" -eq 0 ]; then
         VERSION=$(yay -Q "$PACKAGE" 2>/dev/null | cut -d' ' -f2)
         echo "Installed: $PACKAGE - $VERSION"
     else
         echo "Failed to install: $PACKAGE"
-        echo "$YAY_OUTPUT"
         echo "---"
     fi
 done < "$REPO_PATH/setup/pkglist.txt"

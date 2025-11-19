@@ -100,12 +100,11 @@ while IFS= read -r PACKAGE; do
     YAY_EXIT_CODE=${PIPESTATUS[0]}
     rm -f "$TEMP_OUTPUT"
     
-    if [ $YAY_EXIT_CODE -eq 0 ]; then
+    if [ "$YAY_EXIT_CODE" -eq 0 ]; then
         VERSION=$(yay -Q "$PACKAGE" 2>/dev/null | cut -d' ' -f2)
         echo "Installed: $PACKAGE - $VERSION"
     else
         echo "Failed to install: $PACKAGE"
-        echo "$YAY_OUTPUT"
         echo "---"
     fi
 done < "$REPO_PATH/dev/pkglist.txt"
@@ -116,9 +115,6 @@ while IFS= read -r PACKAGE; do
     case "$PACKAGE" in
         ""|"#"*) continue ;;
     esac
-    
-    # Extract package name (the part after the last /)
-    PACKAGE_NAME=$(echo "$PACKAGE" | awk -F'/' '{print $NF}')
     
     # Check if package is already installed
     if composer global show "$PACKAGE" >/dev/null 2>&1; then
@@ -138,6 +134,7 @@ done < "$REPO_PATH/dev/composer.txt"
 # Ensure composer bin is in PATH
 if [[ ":$PATH:" != *":$HOME/.config/composer/vendor/bin:"* ]]; then
     echo -e "\nNote: Add Composer bin directory to your PATH by adding this to your shell config:"
+    # shellcheck disable=SC2016
     echo 'export PATH="$HOME/.config/composer/vendor/bin:$PATH"'
 fi
 
