@@ -4,7 +4,7 @@ This repo includes my notes & details to configure new machines the way I like t
 
 ## Omarchy
 
-Omarchy gets me a solid foundation for what I want. I'm currently using the Osaka Jade theme but also can quickly switch based on mood.
+Omarchy gets me a solid foundation for what I want on top of Arch Linux with Hyprland. I'm currently using the Osaka Jade theme but also can quickly switch based on mood.
 
 - [Omarchy Website](https://omarchy.org)
 - [Omarchy Docs](https://learn.omacom.io/2/the-omarchy-manual)
