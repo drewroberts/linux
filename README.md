@@ -62,6 +62,26 @@ On my streaming devices, I use the following:
 
 Files included in the /config directory to overwrite default Omarchy configs.
 
+## Caps Lock Remap (Esc on Tap, Ctrl on Hold)
+
+Running `setup.sh` now installs and configures [`keyd`](https://github.com/rvaiya/keyd) so Caps Lock behaves like the classic Vim-friendly overload: tapping sends `Esc`, while holding turns it into `Ctrl`. The remap is applied at the system level, so it works in Hyprland, terminals, TTYs, and GUI apps instantly. The script also enables the `keyd` service so the behavior persists across reboots.
+
+VS Code sometimes ignores low-level remaps unless it listens to raw key codes. Add these entries to your `settings.json` to make sure the new Caps behavior is respected:
+
+```json
+{
+	"keyboard.dispatch": "keyCode",
+	"window.titleBarStyle": "custom"
+}-----
+```
+
+After `keyd` is running and these settings saved, try this flow to verify:
+
+1.  Open VS Code.
+2.  **Tap CapsLock:** It should clear your selection or close a popup (Escape behavior).
+3.  **Hold CapsLock + P:** It should open the File Search (Control behavior).
+
+
 ## Custom ASCII Art
 
 Files included in the /ascii folder to replace the default omarchy ascii at in /.config/omarchy/branding on the linux computers.

@@ -1,3 +1,4 @@
 beekeeper-studio-bin
 telegram-desktop
 visual-studio-code-bin
+keyd

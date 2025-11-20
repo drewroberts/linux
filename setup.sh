@@ -48,6 +48,52 @@ create_copy() {
     echo "Copied: $(basename "$SOURCE") -> $TARGET"
 }
 
+# Configure keyd so Caps Lock taps send Escape and holds send Control
+configure_keyd() {
+    echo -e "\n--- Configuring keyd for Caps Lock remap ---"
+
+    if ! command -v keyd >/dev/null 2>&1; then
+        echo "keyd not found. Attempting installation via yay..."
+        if ! yay -S --needed --noconfirm keyd; then
+            echo "WARNING: Failed to install keyd. Skipping remap configuration."
+            return
+        fi
+    fi
+
+    sudo mkdir -p /etc/keyd
+
+    local KEYD_TEMP
+    KEYD_TEMP=$(mktemp)
+    cat <<'EOF' > "$KEYD_TEMP"
+[ids]
+*
+
+[main]
+# Maps capslock to escape when pressed and control when held.
+capslock = overload(control, esc)
+EOF
+
+    if sudo test -f /etc/keyd/default.conf && sudo cmp -s "$KEYD_TEMP" /etc/keyd/default.conf; then
+        echo "Skipped: /etc/keyd/default.conf (already configured)"
+    else
+        sudo cp "$KEYD_TEMP" /etc/keyd/default.conf
+        echo "Configured: /etc/keyd/default.conf"
+    fi
+    rm -f "$KEYD_TEMP"
+
+    if sudo systemctl enable keyd >/dev/null 2>&1; then
+        echo "Enabled: keyd service"
+    else
+        echo "WARNING: Failed to enable keyd service"
+    fi
+
+    if sudo systemctl start keyd >/dev/null 2>&1; then
+        echo "Started: keyd service"
+    else
+        echo "WARNING: Failed to start keyd service"
+    fi
+}
+
 # Run the directory creation
 create_dirs
 
@@ -116,6 +162,11 @@ while IFS= read -r PACKAGE; do
         echo "Skipped: $PACKAGE (not installed)"
     fi
 done < "$REPO_PATH/setup/rm-applications.txt"
+
+
+# --- 2.3 Keyboard Remapping (Caps Lock overload) ---
+
+configure_keyd
 
 
 # --- 3. Web Application Deployment Phase ---
