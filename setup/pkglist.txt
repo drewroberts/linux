@@ -7,3 +7,4 @@ dog
 croc
 magic-wormhole
 ascii-image-converter-git
+ttyd
