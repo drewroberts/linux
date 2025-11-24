@@ -5,3 +5,4 @@ composer
 go
 podman-compose
 kubeseal
+gemini-cli

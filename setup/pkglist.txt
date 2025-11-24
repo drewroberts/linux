@@ -5,4 +5,4 @@ keyd
 yazi
 dog
 magic-wormhole
-gemini-cli
+ascii-image-converter-git
