@@ -4,5 +4,6 @@ visual-studio-code-bin
 keyd
 yazi
 dog
+croc
 magic-wormhole
 ascii-image-converter-git
