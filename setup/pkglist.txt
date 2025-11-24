@@ -3,3 +3,6 @@ telegram-desktop
 visual-studio-code-bin
 keyd
 yazi
+dog
+magic-wormhole
+gemini-cli
