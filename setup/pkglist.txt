@@ -3,6 +3,7 @@ telegram-desktop
 visual-studio-code-bin
 keyd
 yazi
+xh
 dog
 croc
 magic-wormhole
